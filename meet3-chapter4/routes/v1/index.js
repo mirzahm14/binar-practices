@@ -6,7 +6,9 @@ const client = new pg.Client({
   database: "practice",
   password: "12345",
   port: 5432,
-}).connect();
+})
+
+client.connect()
 
 router.post("/apartments", async (req, res) => {
   const { building_name, floor_number, rent_price, is_available } = req.body;

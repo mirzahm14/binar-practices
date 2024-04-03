@@ -1,0 +1,366 @@
+openapi: 3.0.3
+info:
+  title: Swagger Apartments
+  description: |-
+  version: 1.0.11
+servers:
+  - url: http://localhost:3000/v1/
+paths:
+  /apartments:
+    post:
+      summary: add new apartment data
+      description: add new apartment data
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              allOf:
+                - $ref: '#/components/schemas/apartments'
+                - type: object
+                  properties:
+                    floor_number:
+                      type: integer
+                      example: 2
+                    rent_price:
+                      type: integer
+                      example: 96000
+                    is_available:
+                      type: boolean
+                      example: false
+                
+      responses:
+        200:
+          description: success
+          content:
+            application/json:
+              schema:              
+                allOf:
+                - type: object
+                  properties:
+                    message:
+                      type: string
+                      example: 'SUCCESS'
+                    data:
+                      allOf:
+                        - $ref: '#/components/schemas/apartments'
+                        - type: object
+                          properties:
+                            floor_number:
+                              type: integer
+                              example: 2
+                            rent_price:
+                              type: integer
+                              example: 96000
+                            is_available:
+                              type: boolean
+                              example: false
+        400:
+          description: failed
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    example: 'failed'
+                  data:
+                    type: string
+                    example: 'apartment failed to create'
+        500:
+          description: failed
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    example: 'failed'
+                  data:
+                    type: string
+                    example: 'internal server error'
+    get:
+      summary: get all apartment data
+      description: get all apartment data
+      responses:
+        200:
+          description: success
+          content:
+            application/json:
+              schema:              
+                  type: object
+                  properties:
+                    message:
+                      type: string
+                      example: 'SUCCESS'
+                    data:
+                      type: array
+                      items:
+                        $ref: '#/components/schemas/apartments'
+        400:
+          description: failed
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    example: 'failed'
+                  data:
+                    type: string
+                    example: 'apartments not found'
+        500:
+          description: failed
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    example: 'failed'
+                  data:
+                    type: string
+                    example: 'internal server error'
+  /apartments/{id}:
+    get:
+      summary: get specific apartment data
+      description: get specific apartment data
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: integer
+            example: 1
+      responses:
+        200:
+          description: success
+          content:
+            application/json:
+              schema:              
+                type: object
+                properties:
+                  message:
+                    type: string
+                    example: 'SUCCESS'
+                  data:
+                    allOf:
+                      - $ref: '#/components/schemas/apartments'
+                      - type: object
+                        properties:
+                          floor_number:
+                            type: integer
+                            example: 2
+                          rent_price:
+                            type: integer
+                            example: 96000
+                          is_available:
+                            type: boolean
+                            example: false
+        400:
+          description: failed
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    example: 'failed'
+                  data:
+                    type: string
+                    example: 'apartment not found'
+        500:
+          description: failed
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    example: 'failed'
+                  data:
+                    type: string
+                    example: 'internal server error'
+    put:
+      summary: update specific apartment data
+      description: update specific apartment data
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: integer
+            example: 1
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              allOf:
+                - $ref: '#/components/schemas/apartments'
+                - type: object
+                  properties:
+                    floor_number:
+                      type: integer
+                      example: 2
+                    rent_price:
+                      type: integer
+                      example: 96000
+                    is_available:
+                      type: boolean
+                      example: false
+      responses:
+        200:
+          description: success
+          content:
+            application/json:
+              schema:              
+                type: object
+                properties:
+                  message:
+                    type: string
+                    example: 'SUCCESS'
+                  data:
+                    allOf:
+                      - $ref: '#/components/schemas/apartments'
+                      - type: object
+                        properties:
+                          floor_number:
+                            type: integer
+                            example: 2
+                          rent_price:
+                            type: integer
+                            example: 96000
+                          is_available:
+                            type: boolean
+                            example: false
+        400:
+          description: failed
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    example: 'failed'
+                  data:
+                    type: string
+                    example: 'apartment not found'
+        401:
+          description: failed
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    example: 'failed'
+                  data:
+                    type: string
+                    example: 'apartment failed to update'
+        500:
+          description: failed
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    example: 'failed'
+                  data:
+                    type: string
+                    example: 'internal server error'
+    delete:
+      summary: delete specific apartment data
+      description: delete specific apartment data
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: integer
+            example: 1
+      responses:
+        200:
+          description: success
+          content:
+            application/json:
+              schema:              
+                type: object
+                properties:
+                  message:
+                    type: string
+                    example: 'SUCCESS'
+                  data:
+                    allOf:
+                      - $ref: '#/components/schemas/apartments'
+                      - type: object
+                        properties:
+                          floor_number:
+                            type: integer
+                            example: 2
+                          rent_price:
+                            type: integer
+                            example: 96000
+                          is_available:
+                            type: boolean
+                            example: false
+        400:
+          description: failed
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    example: 'failed'
+                  data:
+                    type: string
+                    example: 'apartment not found'
+        401:
+          description: failed
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    example: 'failed'
+                  data:
+                    type: string
+                    example: 'apartment failed to delete'
+        500:
+          description: failed
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    example: 'failed'
+                  data:
+                    type: string
+                    example: 'internal server error'
+components:
+  schemas:
+    apartments:
+      type: object
+      properties:
+        id:
+          type: integer
+          example: 1
+        building_name:
+          type: string
+          example: "Studio 12"
